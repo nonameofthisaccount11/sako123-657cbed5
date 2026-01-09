@@ -39,8 +39,7 @@ export function Navigation() {
             className="text-xl font-display font-bold tracking-tight"
             whileHover={{ scale: 1.02 }}
           >
-            <span className="gradient-text">NEXUS</span>
-            <span className="text-foreground/80">.</span>
+            <span className="gradient-text">𝐒𝐀𝐊𝐎</span>
           </motion.a>
 
           {/* Desktop Navigation */}

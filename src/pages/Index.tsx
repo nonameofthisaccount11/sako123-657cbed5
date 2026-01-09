@@ -21,8 +21,8 @@ const Index = () => {
       {/* Hero Section with 3D Geometric Shapes */}
       <HeroGeometric
         badge="Creative Digital Agency"
-        title1="We Build"
-        title2="Digital Experiences"
+        title1="The Purest Point"
+        title2="of Contact."
         onScrollClick={scrollToWork}
       />
 
