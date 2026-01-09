@@ -34,8 +34,7 @@ export function Footer() {
           {/* Brand Column */}
           <div className="lg:col-span-2">
             <a href="#" className="inline-block text-2xl font-display font-bold mb-4">
-              <span className="gradient-text">NEXUS</span>
-              <span className="text-foreground/80">.</span>
+              <span className="gradient-text">𝐒𝐀𝐊𝐎</span>
             </a>
             <p className="text-muted-foreground max-w-sm mb-6">
               We craft exceptional digital experiences that transform businesses and captivate audiences.
