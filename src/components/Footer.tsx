@@ -34,7 +34,7 @@ export function Footer() {
           {/* Brand Column */}
           <div className="lg:col-span-2">
             <a href="#" className="inline-block text-2xl font-display font-bold mb-4">
-              <span className="gradient-text">𝐒𝐀𝐊𝐎</span>
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-amber-300 via-yellow-400 to-amber-500 drop-shadow-[0_0_10px_rgba(251,191,36,0.5)]">𝐒𝐀𝐊𝐎</span>
             </a>
             <p className="text-muted-foreground max-w-sm mb-6">
               We craft exceptional digital experiences that transform businesses and captivate audiences.

@@ -39,7 +39,7 @@ export function Navigation() {
             className="text-xl font-display font-bold tracking-tight"
             whileHover={{ scale: 1.02 }}
           >
-            <span className="gradient-text">𝐒𝐀𝐊𝐎</span>
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-amber-300 via-yellow-400 to-amber-500 drop-shadow-[0_0_10px_rgba(251,191,36,0.5)]">𝐒𝐀𝐊𝐎</span>
           </motion.a>
 
           {/* Desktop Navigation */}
