@@ -6,74 +6,78 @@
 
 @layer base {
   :root {
-    --background: 0 0% 1.2%;
+    --background: 0 0% 0%;
     --foreground: 0 0% 98%;
 
-    --card: 0 0% 3%;
+    --card: 0 0% 2%;
     --card-foreground: 0 0% 98%;
 
-    --popover: 0 0% 3%;
+    --popover: 0 0% 2%;
     --popover-foreground: 0 0% 98%;
 
-    --primary: 239 84% 67%;
-    --primary-foreground: 0 0% 100%;
+    --primary: 45 93% 47%;
+    --primary-foreground: 0 0% 0%;
 
     --secondary: 340 82% 52%;
     --secondary-foreground: 0 0% 100%;
 
-    --muted: 0 0% 10%;
-    --muted-foreground: 0 0% 60%;
+    --muted: 0 0% 8%;
+    --muted-foreground: 0 0% 55%;
 
-    --accent: 270 70% 60%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 45 80% 55%;
+    --accent-foreground: 0 0% 0%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 0 0% 12%;
-    --input: 0 0% 12%;
-    --ring: 239 84% 67%;
+    --border: 0 0% 10%;
+    --input: 0 0% 10%;
+    --ring: 45 93% 47%;
 
     --radius: 0.75rem;
 
+    /* Brand golden colors */
+    --golden-light: 45 100% 70%;
+    --golden: 45 93% 50%;
+    --golden-dark: 38 92% 40%;
+
     /* Custom agency colors */
-    --hero: 0 0% 1.2%;
-    --glow-indigo: 239 84% 67%;
+    --hero: 0 0% 0%;
+    --glow-golden: 45 93% 50%;
+    --glow-amber: 38 92% 50%;
     --glow-rose: 340 82% 52%;
     --glow-violet: 270 70% 60%;
-    --glow-amber: 38 92% 50%;
-    --glow-cyan: 188 94% 50%;
 
-    --sidebar-background: 0 0% 2%;
+    --sidebar-background: 0 0% 1%;
     --sidebar-foreground: 0 0% 90%;
-    --sidebar-primary: 239 84% 67%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 0 0% 8%;
+    --sidebar-primary: 45 93% 50%;
+    --sidebar-primary-foreground: 0 0% 0%;
+    --sidebar-accent: 0 0% 6%;
     --sidebar-accent-foreground: 0 0% 90%;
-    --sidebar-border: 0 0% 12%;
-    --sidebar-ring: 239 84% 67%;
+    --sidebar-border: 0 0% 10%;
+    --sidebar-ring: 45 93% 50%;
   }
 
   .dark {
-    --background: 0 0% 1.2%;
+    --background: 0 0% 0%;
     --foreground: 0 0% 98%;
-    --card: 0 0% 3%;
+    --card: 0 0% 2%;
     --card-foreground: 0 0% 98%;
-    --popover: 0 0% 3%;
+    --popover: 0 0% 2%;
     --popover-foreground: 0 0% 98%;
-    --primary: 239 84% 67%;
-    --primary-foreground: 0 0% 100%;
+    --primary: 45 93% 47%;
+    --primary-foreground: 0 0% 0%;
     --secondary: 340 82% 52%;
     --secondary-foreground: 0 0% 100%;
-    --muted: 0 0% 10%;
-    --muted-foreground: 0 0% 60%;
-    --accent: 270 70% 60%;
-    --accent-foreground: 0 0% 100%;
+    --muted: 0 0% 8%;
+    --muted-foreground: 0 0% 55%;
+    --accent: 45 80% 55%;
+    --accent-foreground: 0 0% 0%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 12%;
-    --input: 0 0% 12%;
-    --ring: 239 84% 67%;
+    --border: 0 0% 10%;
+    --input: 0 0% 10%;
+    --ring: 45 93% 47%;
   }
 }
 
@@ -89,6 +93,7 @@
   body {
     @apply bg-background text-foreground font-sans antialiased;
     font-family: 'Inter', system-ui, sans-serif;
+    background-color: hsl(0 0% 0%);
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -101,6 +106,11 @@
     @apply bg-clip-text text-transparent bg-gradient-to-r from-primary via-accent to-secondary;
   }
 
+  .golden-text {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-amber-300 via-yellow-400 to-amber-500;
+    filter: drop-shadow(0 0 15px rgba(251, 191, 36, 0.5));
+  }
+
   .glass-card {
     @apply bg-white/[0.02] backdrop-blur-xl border border-white/[0.05] rounded-2xl;
   }
@@ -109,7 +119,7 @@
     @apply relative;
     &::before {
       content: '';
-      @apply absolute -inset-[1px] rounded-2xl bg-gradient-to-r from-primary/50 via-accent/50 to-secondary/50 opacity-0 transition-opacity duration-500;
+      @apply absolute -inset-[1px] rounded-2xl bg-gradient-to-r from-amber-400/50 via-yellow-500/50 to-amber-400/50 opacity-0 transition-opacity duration-500;
       z-index: -1;
     }
     &:hover::before {
@@ -123,6 +133,15 @@
 
   .container-wide {
     @apply max-w-7xl mx-auto px-6 md:px-8 lg:px-12;
+  }
+
+  /* Page transition animations */
+  .page-enter {
+    @apply opacity-0 translate-y-4;
+  }
+  
+  .page-enter-active {
+    @apply opacity-100 translate-y-0 transition-all duration-500 ease-out;
   }
 }
 
@@ -147,5 +166,15 @@
   @keyframes glow {
     from { box-shadow: 0 0 20px -10px hsl(var(--primary)); }
     to { box-shadow: 0 0 40px -10px hsl(var(--primary)); }
+  }
+
+  .animate-shimmer {
+    animation: shimmer 2s linear infinite;
+    background-size: 200% 100%;
+  }
+
+  @keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
   }
 }
