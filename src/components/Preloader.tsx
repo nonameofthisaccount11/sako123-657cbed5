@@ -36,7 +36,8 @@ export function Preloader({ onComplete }: PreloaderProps) {
     };
   }, [onComplete]);
 
-  const letters = "𝐒𝐀𝐊𝐎".split("");
+  // Use regular Latin letters with CSS styling
+  const letters = "SAKO".split("");
 
   const containerVariants = {
     hidden: {},
@@ -85,7 +86,7 @@ export function Preloader({ onComplete }: PreloaderProps) {
     <AnimatePresence>
       {phase !== "exit" ? (
         <motion.div
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-background overflow-hidden"
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black overflow-hidden"
           initial={{ opacity: 1 }}
           exit={{
             opacity: 0,
@@ -153,7 +154,7 @@ export function Preloader({ onComplete }: PreloaderProps) {
               <div className="w-full h-full bg-gradient-to-r from-amber-400/30 via-yellow-300/40 to-amber-500/30 rounded-full" />
             </motion.div>
 
-            {/* Brand name with staggered animation */}
+            {/* Brand name with staggered animation - using regular letters */}
             <motion.div
               className="relative flex items-center justify-center perspective-1000"
               variants={containerVariants}
@@ -164,9 +165,10 @@ export function Preloader({ onComplete }: PreloaderProps) {
                 <motion.span
                   key={index}
                   variants={letterVariants}
-                  className="text-6xl sm:text-8xl md:text-9xl font-display font-bold bg-clip-text text-transparent bg-gradient-to-r from-amber-300 via-yellow-400 to-amber-500 drop-shadow-[0_0_30px_rgba(251,191,36,0.5)]"
+                  className="text-6xl sm:text-8xl md:text-9xl font-display font-black tracking-wider bg-clip-text text-transparent bg-gradient-to-b from-amber-200 via-yellow-400 to-amber-600"
                   style={{
                     textShadow: "0 0 60px rgba(251,191,36,0.4)",
+                    WebkitTextStroke: "1px rgba(251,191,36,0.3)",
                   }}
                 >
                   {letter}
