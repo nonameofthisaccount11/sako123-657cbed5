@@ -12,21 +12,21 @@ export function Preloader({ onComplete }: PreloaderProps) {
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    // Simulate loading progress
+    // Simulate loading progress - faster
     const progressInterval = setInterval(() => {
       setProgress((prev) => {
         if (prev >= 100) {
           clearInterval(progressInterval);
           return 100;
         }
-        return prev + Math.random() * 15;
+        return prev + Math.random() * 35;
       });
-    }, 100);
+    }, 50);
 
-    // Phase transitions
-    const revealTimer = setTimeout(() => setPhase("reveal"), 1500);
-    const exitTimer = setTimeout(() => setPhase("exit"), 3000);
-    const completeTimer = setTimeout(() => onComplete(), 3800);
+    // Phase transitions - much faster
+    const revealTimer = setTimeout(() => setPhase("reveal"), 600);
+    const exitTimer = setTimeout(() => setPhase("exit"), 1200);
+    const completeTimer = setTimeout(() => onComplete(), 1500);
 
     return () => {
       clearInterval(progressInterval);
