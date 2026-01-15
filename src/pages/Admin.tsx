@@ -10,9 +10,14 @@ import { AdminMedia } from "@/components/admin/AdminMedia";
 import { AdminContacts } from "@/components/admin/AdminContacts";
 import { AdminSEO } from "@/components/admin/AdminSEO";
 import { AdminSiteContent } from "@/components/admin/AdminSiteContent";
+import { AdminSettings } from "@/components/admin/AdminSettings";
+import { AdminReviews } from "@/components/admin/AdminReviews";
+import { AdminServices } from "@/components/admin/AdminServices";
+import { AdminTeam } from "@/components/admin/AdminTeam";
+import { AdminAnalytics } from "@/components/admin/AdminAnalytics";
 import { Loader2 } from "lucide-react";
 
-type AdminView = "dashboard" | "blog" | "projects" | "media" | "contacts" | "seo" | "content";
+type AdminView = "dashboard" | "blog" | "projects" | "media" | "contacts" | "seo" | "content" | "settings" | "reviews" | "services" | "team" | "analytics";
 
 const Admin = () => {
   const [session, setSession] = useState<Session | null>(null);
@@ -113,6 +118,16 @@ const Admin = () => {
         return <AdminSEO />;
       case "content":
         return <AdminSiteContent />;
+      case "settings":
+        return <AdminSettings />;
+      case "reviews":
+        return <AdminReviews />;
+      case "services":
+        return <AdminServices />;
+      case "team":
+        return <AdminTeam />;
+      case "analytics":
+        return <AdminAnalytics />;
       default:
         return <AdminDashboard />;
     }

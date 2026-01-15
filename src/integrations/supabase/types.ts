@@ -86,6 +86,51 @@ export type Database = {
         }
         Relationships: []
       }
+      customer_reviews: {
+        Row: {
+          created_at: string
+          customer_company: string | null
+          customer_image: string | null
+          customer_name: string
+          customer_title: string | null
+          display_order: number | null
+          id: string
+          is_featured: boolean | null
+          is_published: boolean | null
+          rating: number
+          review_text: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          customer_company?: string | null
+          customer_image?: string | null
+          customer_name: string
+          customer_title?: string | null
+          display_order?: number | null
+          id?: string
+          is_featured?: boolean | null
+          is_published?: boolean | null
+          rating?: number
+          review_text: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          customer_company?: string | null
+          customer_image?: string | null
+          customer_name?: string
+          customer_title?: string | null
+          display_order?: number | null
+          id?: string
+          is_featured?: boolean | null
+          is_published?: boolean | null
+          rating?: number
+          review_text?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       media_library: {
         Row: {
           alt_text: string | null
@@ -116,6 +161,33 @@ export type Database = {
           file_url?: string
           id?: string
           uploaded_by?: string | null
+        }
+        Relationships: []
+      }
+      page_visits: {
+        Row: {
+          created_at: string
+          id: string
+          page_path: string
+          referrer: string | null
+          user_agent: string | null
+          visitor_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          page_path: string
+          referrer?: string | null
+          user_agent?: string | null
+          visitor_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          page_path?: string
+          referrer?: string | null
+          user_agent?: string | null
+          visitor_id?: string | null
         }
         Relationships: []
       }
@@ -233,6 +305,45 @@ export type Database = {
         }
         Relationships: []
       }
+      services: {
+        Row: {
+          created_at: string
+          description: string | null
+          display_order: number | null
+          features: Json | null
+          icon: string | null
+          id: string
+          is_featured: boolean | null
+          is_published: boolean | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          display_order?: number | null
+          features?: Json | null
+          icon?: string | null
+          id?: string
+          is_featured?: boolean | null
+          is_published?: boolean | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          display_order?: number | null
+          features?: Json | null
+          icon?: string | null
+          id?: string
+          is_featured?: boolean | null
+          is_published?: boolean | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       site_content: {
         Row: {
           content: Json
@@ -256,6 +367,69 @@ export type Database = {
           id?: string
           page_key?: string
           section_key?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      site_settings: {
+        Row: {
+          created_at: string
+          id: string
+          setting_key: string
+          setting_value: Json
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          setting_key: string
+          setting_value?: Json
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          setting_key?: string
+          setting_value?: Json
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      team_members: {
+        Row: {
+          bio: string | null
+          created_at: string
+          display_order: number | null
+          id: string
+          image_url: string | null
+          is_published: boolean | null
+          name: string
+          role: string | null
+          social_links: Json | null
+          updated_at: string
+        }
+        Insert: {
+          bio?: string | null
+          created_at?: string
+          display_order?: number | null
+          id?: string
+          image_url?: string | null
+          is_published?: boolean | null
+          name: string
+          role?: string | null
+          social_links?: Json | null
+          updated_at?: string
+        }
+        Update: {
+          bio?: string | null
+          created_at?: string
+          display_order?: number | null
+          id?: string
+          image_url?: string | null
+          is_published?: boolean | null
+          name?: string
+          role?: string | null
+          social_links?: Json | null
           updated_at?: string
         }
         Relationships: []
