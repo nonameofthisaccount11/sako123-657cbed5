@@ -5,6 +5,7 @@ import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { Preloader } from "@/components/Preloader";
 import { GlobalFluidBackground } from "@/components/GlobalFluidBackground";
+import { FakeVisitorCounter } from "@/components/FakeVisitorCounter";
 import { Link } from "react-router-dom";
 import { ArrowRight, Sparkles, Zap, Target, Palette } from "lucide-react";
 
@@ -107,6 +108,7 @@ const Home = () => {
 
         <div className="relative z-10">
           <Navigation />
+          <FakeVisitorCounter />
           
           <HeroGeometric
             badge="Creative Digital Agency"
