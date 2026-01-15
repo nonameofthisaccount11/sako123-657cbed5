@@ -457,7 +457,30 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      media_library_public: {
+        Row: {
+          alt_text: string | null
+          file_name: string | null
+          file_type: string | null
+          file_url: string | null
+          id: string | null
+        }
+        Insert: {
+          alt_text?: string | null
+          file_name?: string | null
+          file_type?: string | null
+          file_url?: string | null
+          id?: string | null
+        }
+        Update: {
+          alt_text?: string | null
+          file_name?: string | null
+          file_type?: string | null
+          file_url?: string | null
+          id?: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       has_role: {
