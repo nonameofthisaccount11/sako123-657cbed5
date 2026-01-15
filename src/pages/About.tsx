@@ -1,9 +1,14 @@
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { GlobalFluidBackground } from "@/components/GlobalFluidBackground";
-import { Users, Award, Target, Heart } from "lucide-react";
+import { Users, Award, Target, Heart, User } from "lucide-react";
 import { Link } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
+import type { Tables } from "@/integrations/supabase/types";
+
+type TeamMember = Tables<"team_members">;
 
 const stats = [
   { value: "50+", label: "Projects Completed" },
@@ -35,14 +40,38 @@ const values = [
   },
 ];
 
-const team = [
-  { name: "Alex Chen", role: "Founder & CEO", image: "" },
-  { name: "Sarah Miller", role: "Creative Director", image: "" },
-  { name: "James Wilson", role: "Lead Developer", image: "" },
-  { name: "Emma Davis", role: "UX Designer", image: "" },
-];
-
 const About = () => {
+  const [teamMembers, setTeamMembers] = useState<TeamMember[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchTeamMembers();
+  }, []);
+
+  const fetchTeamMembers = async () => {
+    try {
+      const { data } = await supabase
+        .from("team_members")
+        .select("*")
+        .eq("is_published", true)
+        .order("display_order", { ascending: true });
+
+      setTeamMembers(data || []);
+    } catch (error) {
+      console.debug("Error fetching team members:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Fallback team if no members in database
+  const displayTeam = teamMembers.length > 0 ? teamMembers : [
+    { id: "1", name: "Alex Chen", role: "Founder & CEO", image_url: "" },
+    { id: "2", name: "Sarah Miller", role: "Creative Director", image_url: "" },
+    { id: "3", name: "James Wilson", role: "Lead Developer", image_url: "" },
+    { id: "4", name: "Emma Davis", role: "UX Designer", image_url: "" },
+  ];
+
   return (
     <motion.div
       className="min-h-screen bg-black text-foreground relative"
@@ -200,9 +229,9 @@ const About = () => {
             </motion.div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-              {team.map((member, index) => (
+              {displayTeam.map((member, index) => (
                 <motion.div
-                  key={member.name}
+                  key={member.id}
                   initial={{ opacity: 0, y: 40 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: index * 0.1 }}
@@ -210,7 +239,17 @@ const About = () => {
                   className="group"
                 >
                   <div className="aspect-square rounded-2xl bg-gradient-to-br from-amber-900/20 to-yellow-900/20 mb-4 overflow-hidden">
-                    <div className="w-full h-full group-hover:scale-105 transition-transform duration-500" />
+                    {member.image_url ? (
+                      <img
+                        src={member.image_url}
+                        alt={member.name}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center group-hover:scale-105 transition-transform duration-500">
+                        <User className="w-20 h-20 text-amber-400/30" />
+                      </div>
+                    )}
                   </div>
                   <h3 className="text-lg font-display font-semibold">{member.name}</h3>
                   <p className="text-muted-foreground text-sm">{member.role}</p>

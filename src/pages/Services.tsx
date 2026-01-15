@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
@@ -11,10 +12,26 @@ import {
   TrendingUp,
   Sparkles,
   Zap,
+  LucideIcon,
 } from "lucide-react";
 import { Link } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
+import type { Tables } from "@/integrations/supabase/types";
 
-const services = [
+type Service = Tables<"services">;
+
+// Icon mapping for services
+const iconMap: Record<string, LucideIcon> = {
+  palette: Palette,
+  code: Code,
+  megaphone: Megaphone,
+  layers: Layers,
+  smartphone: Smartphone,
+  trendingup: TrendingUp,
+  // Add more icons as needed
+};
+
+const defaultServices = [
   {
     icon: Palette,
     title: "Brand Identity",
@@ -68,6 +85,39 @@ const process = [
 ];
 
 const Services = () => {
+  const [services, setServices] = useState<Service[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchServices();
+  }, []);
+
+  const fetchServices = async () => {
+    try {
+      const { data } = await supabase
+        .from("services")
+        .select("*")
+        .eq("is_published", true)
+        .order("display_order", { ascending: true });
+
+      setServices(data || []);
+    } catch (error) {
+      console.debug("Error fetching services:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Use database services if available, otherwise use defaults
+  const displayServices = services.length > 0 
+    ? services.map(service => ({
+        icon: iconMap[service.icon?.toLowerCase() || ""] || Sparkles,
+        title: service.title,
+        description: service.description || "",
+        features: Array.isArray(service.features) ? service.features as string[] : [],
+      }))
+    : defaultServices;
+
   return (
     <motion.div
       className="min-h-screen bg-black text-foreground relative"
@@ -106,28 +156,33 @@ const Services = () => {
         <section className="pb-32">
           <div className="container-wide">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {services.map((service, index) => (
-                <motion.div
-                  key={service.title}
-                  initial={{ opacity: 0, y: 40 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
-                  viewport={{ once: true }}
-                  className="glass-card p-8 hover:border-amber-400/20 transition-all group"
-                >
-                  <service.icon className="w-12 h-12 text-amber-400 mb-6 group-hover:scale-110 transition-transform" />
-                  <h3 className="text-2xl font-display font-bold mb-4">{service.title}</h3>
-                  <p className="text-muted-foreground mb-6">{service.description}</p>
-                  <ul className="space-y-2">
-                    {service.features.map((feature) => (
-                      <li key={feature} className="flex items-center gap-2 text-sm">
-                        <Sparkles className="w-3 h-3 text-amber-400" />
-                        {feature}
-                      </li>
-                    ))}
-                  </ul>
-                </motion.div>
-              ))}
+              {displayServices.map((service, index) => {
+                const Icon = service.icon;
+                return (
+                  <motion.div
+                    key={service.title}
+                    initial={{ opacity: 0, y: 40 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: index * 0.1 }}
+                    viewport={{ once: true }}
+                    className="glass-card p-8 hover:border-amber-400/20 transition-all group"
+                  >
+                    <Icon className="w-12 h-12 text-amber-400 mb-6 group-hover:scale-110 transition-transform" />
+                    <h3 className="text-2xl font-display font-bold mb-4">{service.title}</h3>
+                    <p className="text-muted-foreground mb-6">{service.description}</p>
+                    {service.features.length > 0 && (
+                      <ul className="space-y-2">
+                        {service.features.map((feature) => (
+                          <li key={feature} className="flex items-center gap-2 text-sm">
+                            <Sparkles className="w-3 h-3 text-amber-400" />
+                            {feature}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </motion.div>
+                );
+              })}
             </div>
           </div>
         </section>
