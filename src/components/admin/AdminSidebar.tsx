@@ -9,11 +9,16 @@ import {
   Search, 
   Settings, 
   LogOut,
-  Home
+  Home,
+  BarChart3,
+  Star,
+  Briefcase,
+  Users,
+  Sliders
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-type AdminView = "dashboard" | "blog" | "projects" | "media" | "contacts" | "seo" | "content";
+type AdminView = "dashboard" | "blog" | "projects" | "media" | "contacts" | "seo" | "content" | "settings" | "reviews" | "services" | "team" | "analytics";
 
 interface AdminSidebarProps {
   currentView: AdminView;
@@ -22,12 +27,17 @@ interface AdminSidebarProps {
 
 const menuItems = [
   { id: "dashboard" as const, label: "Dashboard", icon: LayoutDashboard },
+  { id: "analytics" as const, label: "Analytics", icon: BarChart3 },
   { id: "blog" as const, label: "Blog Posts", icon: FileText },
   { id: "projects" as const, label: "Projects", icon: FolderOpen },
+  { id: "services" as const, label: "Services", icon: Briefcase },
+  { id: "reviews" as const, label: "Reviews", icon: Star },
+  { id: "team" as const, label: "Team", icon: Users },
   { id: "media" as const, label: "Media Library", icon: Image },
-  { id: "contacts" as const, label: "Contact Forms", icon: Mail },
+  { id: "contacts" as const, label: "Messages", icon: Mail },
   { id: "seo" as const, label: "SEO Settings", icon: Search },
   { id: "content" as const, label: "Site Content", icon: Settings },
+  { id: "settings" as const, label: "Settings", icon: Sliders },
 ];
 
 export function AdminSidebar({ currentView, onViewChange }: AdminSidebarProps) {
@@ -46,7 +56,7 @@ export function AdminSidebar({ currentView, onViewChange }: AdminSidebarProps) {
         </h1>
       </div>
 
-      <nav className="flex-1 p-4 space-y-1">
+      <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
         {menuItems.map((item) => (
           <button
             key={item.id}
