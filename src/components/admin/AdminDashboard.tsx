@@ -1,16 +1,21 @@
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import { FileText, FolderOpen, Image, Mail } from "lucide-react";
+import { FileText, FolderOpen, Image, Mail, TrendingUp, Star, Users } from "lucide-react";
+import { LiveVisitorCounter } from "@/components/LiveVisitorCounter";
 
 interface Stats {
   blogPosts: number;
   projects: number;
   media: number;
   contacts: number;
+  reviews: number;
+  services: number;
 }
 
 export function AdminDashboard() {
-  const [stats, setStats] = useState<Stats>({ blogPosts: 0, projects: 0, media: 0, contacts: 0 });
+  const [stats, setStats] = useState<Stats>({ 
+    blogPosts: 0, projects: 0, media: 0, contacts: 0, reviews: 0, services: 0 
+  });
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -19,11 +24,13 @@ export function AdminDashboard() {
 
   const fetchStats = async () => {
     try {
-      const [blogRes, projectsRes, mediaRes, contactsRes] = await Promise.all([
+      const [blogRes, projectsRes, mediaRes, contactsRes, reviewsRes, servicesRes] = await Promise.all([
         supabase.from("blog_posts").select("id", { count: "exact", head: true }),
         supabase.from("projects").select("id", { count: "exact", head: true }),
         supabase.from("media_library").select("id", { count: "exact", head: true }),
         supabase.from("contact_submissions").select("id", { count: "exact", head: true }).eq("status", "new"),
+        supabase.from("customer_reviews").select("id", { count: "exact", head: true }),
+        supabase.from("services").select("id", { count: "exact", head: true }),
       ]);
 
       setStats({
@@ -31,6 +38,8 @@ export function AdminDashboard() {
         projects: projectsRes.count || 0,
         media: mediaRes.count || 0,
         contacts: contactsRes.count || 0,
+        reviews: reviewsRes.count || 0,
+        services: servicesRes.count || 0,
       });
     } catch (error) {
       console.error("Error fetching stats:", error);
@@ -42,15 +51,20 @@ export function AdminDashboard() {
   const statCards = [
     { label: "Blog Posts", value: stats.blogPosts, icon: FileText, color: "text-blue-400" },
     { label: "Projects", value: stats.projects, icon: FolderOpen, color: "text-green-400" },
+    { label: "Services", value: stats.services, icon: TrendingUp, color: "text-cyan-400" },
+    { label: "Reviews", value: stats.reviews, icon: Star, color: "text-yellow-400" },
     { label: "Media Files", value: stats.media, icon: Image, color: "text-purple-400" },
     { label: "New Messages", value: stats.contacts, icon: Mail, color: "text-amber-400" },
   ];
 
   return (
     <div>
-      <div className="mb-8">
-        <h2 className="text-3xl font-display font-bold">Dashboard</h2>
-        <p className="text-muted-foreground">Welcome to the SAKO admin panel</p>
+      <div className="flex items-center justify-between mb-8">
+        <div>
+          <h2 className="text-3xl font-display font-bold">Dashboard</h2>
+          <p className="text-muted-foreground">Welcome to the SAKO admin panel</p>
+        </div>
+        <LiveVisitorCounter variant="admin" />
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
