@@ -1,6 +1,8 @@
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { Github, Twitter, Linkedin, Instagram } from "lucide-react";
+import { Github, Twitter, Linkedin, Instagram, Facebook, Youtube } from "lucide-react";
 import { Link } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
 
 const footerLinks = [
   {
@@ -32,14 +34,114 @@ const footerLinks = [
   },
 ];
 
-const socialLinks = [
-  { icon: Twitter, href: "#", label: "Twitter" },
-  { icon: Github, href: "#", label: "GitHub" },
-  { icon: Linkedin, href: "#", label: "LinkedIn" },
-  { icon: Instagram, href: "#", label: "Instagram" },
-];
+const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
+  twitter: Twitter,
+  github: Github,
+  linkedin: Linkedin,
+  instagram: Instagram,
+  facebook: Facebook,
+  youtube: Youtube,
+};
+
+interface BrandSettings {
+  name: string;
+  tagline: string;
+  logo_url: string;
+}
+
+interface SocialLinks {
+  twitter: string;
+  github: string;
+  linkedin: string;
+  instagram: string;
+  facebook: string;
+  youtube: string;
+}
+
+interface FooterSettings {
+  copyright: string;
+  terms_url: string;
+  privacy_url: string;
+  cookies_url: string;
+}
 
 export function Footer() {
+  const [brand, setBrand] = useState<BrandSettings>({ name: "SAKO", tagline: "", logo_url: "" });
+  const [socialLinks, setSocialLinks] = useState<SocialLinks>({
+    twitter: "#", github: "#", linkedin: "#", instagram: "#", facebook: "#", youtube: "#"
+  });
+  const [footer, setFooter] = useState<FooterSettings>({
+    copyright: "© 2024 SAKO Agency. All rights reserved.",
+    terms_url: "#",
+    privacy_url: "#",
+    cookies_url: "#"
+  });
+
+  useEffect(() => {
+    fetchSettings();
+  }, []);
+
+  const fetchSettings = async () => {
+    try {
+      const { data } = await supabase
+        .from("site_settings")
+        .select("*");
+
+      if (data) {
+        data.forEach((setting) => {
+          const value = setting.setting_value as Record<string, string>;
+          switch (setting.setting_key) {
+            case "brand":
+              setBrand({
+                name: value.name || "SAKO",
+                tagline: value.tagline || "",
+                logo_url: value.logo_url || ""
+              });
+              break;
+            case "social_links":
+              setSocialLinks({
+                twitter: value.twitter || "#",
+                github: value.github || "#",
+                linkedin: value.linkedin || "#",
+                instagram: value.instagram || "#",
+                facebook: value.facebook || "#",
+                youtube: value.youtube || "#"
+              });
+              break;
+            case "footer":
+              setFooter({
+                copyright: value.copyright || "© 2024 SAKO Agency. All rights reserved.",
+                terms_url: value.terms_url || "#",
+                privacy_url: value.privacy_url || "#",
+                cookies_url: value.cookies_url || "#"
+              });
+              break;
+          }
+        });
+      }
+    } catch (error) {
+      console.debug("Error fetching footer settings:", error);
+    }
+  };
+
+  // Filter social links that have actual URLs (not just #)
+  const activeSocialLinks = Object.entries(socialLinks)
+    .filter(([_, url]) => url && url !== "#")
+    .map(([platform, url]) => ({
+      platform,
+      url,
+      icon: iconMap[platform]
+    }))
+    .filter(link => link.icon);
+
+  // If no active links, show default placeholders
+  const displaySocialLinks = activeSocialLinks.length > 0 ? activeSocialLinks : [
+    { platform: "twitter", url: "#", icon: Twitter },
+    { platform: "github", url: "#", icon: Github },
+    { platform: "linkedin", url: "#", icon: Linkedin },
+    { platform: "instagram", url: "#", icon: Instagram },
+  ];
+
   return (
     <footer className="relative overflow-hidden border-t border-border bg-black">
       {/* Background Glow */}
@@ -50,22 +152,24 @@ export function Footer() {
           {/* Brand Column */}
           <div className="lg:col-span-2">
             <Link to="/" className="inline-block text-3xl font-display font-black mb-4 golden-text tracking-wider">
-              SAKO
+              {brand.name}
             </Link>
             <p className="text-muted-foreground max-w-sm mb-6">
-              We craft exceptional digital experiences that transform businesses and captivate audiences.
+              {brand.tagline || "We craft exceptional digital experiences that transform businesses and captivate audiences."}
             </p>
             <div className="flex items-center gap-4">
-              {socialLinks.map((social) => {
+              {displaySocialLinks.map((social) => {
                 const Icon = social.icon;
                 return (
                   <motion.a
-                    key={social.label}
-                    href={social.href}
+                    key={social.platform}
+                    href={social.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     whileHover={{ scale: 1.1, y: -2 }}
                     whileTap={{ scale: 0.95 }}
                     className="w-10 h-10 rounded-full bg-white/[0.03] border border-white/[0.08] flex items-center justify-center text-muted-foreground hover:text-foreground hover:border-amber-400/30 transition-colors"
-                    aria-label={social.label}
+                    aria-label={social.platform}
                   >
                     <Icon className="w-4 h-4" />
                   </motion.a>
@@ -99,18 +203,18 @@ export function Footer() {
         {/* Bottom Bar */}
         <div className="pt-8 border-t border-border flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-sm text-muted-foreground">
-            © 2024 SAKO Agency. All rights reserved.
+            {footer.copyright}
           </p>
           <div className="flex items-center gap-6">
-            <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+            <Link to={footer.terms_url} className="text-sm text-muted-foreground hover:text-foreground transition-colors">
               Terms of Service
-            </a>
-            <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+            </Link>
+            <Link to={footer.privacy_url} className="text-sm text-muted-foreground hover:text-foreground transition-colors">
               Privacy Policy
-            </a>
-            <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+            </Link>
+            <Link to={footer.cookies_url} className="text-sm text-muted-foreground hover:text-foreground transition-colors">
               Cookies
-            </a>
+            </Link>
           </div>
         </div>
       </div>
