@@ -10,12 +10,12 @@ import { Link } from "react-router-dom";
 import { ArrowRight, Sparkles, Zap, Target, Palette } from "lucide-react";
 
 // Parallax section wrapper component
-const ParallaxSection = ({ 
-  children, 
+const ParallaxSection = ({
+  children,
   speed = 0.5,
-  className = "" 
-}: { 
-  children: React.ReactNode; 
+  className = ""
+}: {
+  children: React.ReactNode;
   speed?: number;
   className?: string;
 }) => {
@@ -24,10 +24,10 @@ const ParallaxSection = ({
     target: ref,
     offset: ["start end", "end start"]
   });
-  
+
   const y = useTransform(scrollYProgress, [0, 1], [100 * speed, -100 * speed]);
   const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0.6, 1, 1, 0.6]);
-  
+
   return (
     <motion.div ref={ref} style={{ y, opacity }} className={className}>
       {children}
@@ -36,12 +36,12 @@ const ParallaxSection = ({
 };
 
 // Floating element for decorative parallax
-const FloatingElement = ({ 
-  delay = 0, 
+const FloatingElement = ({
+  delay = 0,
   duration = 4,
-  className = "" 
-}: { 
-  delay?: number; 
+  className = ""
+}: {
+  delay?: number;
   duration?: number;
   className?: string;
 }) => {
@@ -61,6 +61,27 @@ const FloatingElement = ({
     />
   );
 };
+
+const projects = [
+  {
+    id: 1,
+    title: "Lead Intelligence",
+    category: "Brand Identity • Web Design",
+    image: "projects/p1.png",
+    link: "https://lead-intelligence-platfor.vercel.app/dashboard",
+    type: "external",
+  },
+  {
+    id: 2,
+    title: "Message Center Salon",
+    category: "Web • Development",
+    image: "projects/p2.png",
+    link: "https://serene-haven-web.vercel.app/",
+    type: "external",
+  },
+];
+
+
 
 const featuredServices = [
   {
@@ -109,7 +130,7 @@ const Home = () => {
         <div className="relative z-10">
           <Navigation />
           <FakeVisitorCounter />
-          
+
           <HeroGeometric
             badge="Creative Digital Agency"
             title1="The Purest Point"
@@ -117,18 +138,18 @@ const Home = () => {
           />
 
           {/* Floating Decorative Elements */}
-          <FloatingElement 
-            delay={0} 
+          <FloatingElement
+            delay={0}
             duration={5}
             className="top-[20%] left-[5%] w-32 h-32 rounded-full bg-gradient-to-br from-amber-500/10 to-transparent blur-2xl"
           />
-          <FloatingElement 
-            delay={1} 
+          <FloatingElement
+            delay={1}
             duration={6}
             className="top-[40%] right-[8%] w-24 h-24 rounded-full bg-gradient-to-br from-purple-500/10 to-transparent blur-2xl"
           />
-          <FloatingElement 
-            delay={2} 
+          <FloatingElement
+            delay={2}
             duration={4}
             className="bottom-[30%] left-[10%] w-20 h-20 rounded-full bg-gradient-to-br from-pink-500/10 to-transparent blur-2xl"
           />
@@ -161,8 +182,8 @@ const Home = () => {
                     whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
                     transition={{ duration: 0.6, delay: index * 0.15 }}
                     viewport={{ once: true }}
-                    whileHover={{ 
-                      y: -10, 
+                    whileHover={{
+                      y: -10,
                       scale: 1.02,
                       transition: { duration: 0.3 }
                     }}
@@ -229,42 +250,50 @@ const Home = () => {
               </ParallaxSection>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                {[1, 2].map((item, index) => (
-                  <ParallaxSection key={item} speed={0.2 + index * 0.1}>
+                {projects.map((project, index) => (
+                  <ParallaxSection key={project.id} speed={0.2 + index * 0.1}>
+                    <a href={project.link} target="_blank"
+                      rel="noopener noreferrer" className="block">
                     <motion.div
                       initial={{ opacity: 0, y: 60 }}
                       whileInView={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.8, delay: index * 0.2 }}
                       viewport={{ once: true }}
                       whileHover={{ scale: 1.02 }}
-                      className="group cursor-pointer"
+                      className="group cursor-pointer"  
                     >
-                      <div className="relative overflow-hidden rounded-2xl aspect-[16/10] bg-gradient-to-br from-amber-900/20 to-yellow-900/20 mb-4">
-                        <motion.div 
-                          className="absolute inset-0 bg-gradient-to-br from-amber-500/10 via-transparent to-purple-500/10"
-                          animate={{
-                            opacity: [0.3, 0.6, 0.3],
-                          }}
-                          transition={{
-                            duration: 3,
-                            repeat: Infinity,
-                            ease: "easeInOut"
-                          }}
+                      <div className="relative overflow-hidden rounded-2xl aspect-[16/10] mb-4">
+
+                        {/* Project Image */}
+                        <img
+                          src={project.image}
+                          alt={project.title}
+                          className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6">
-                          <motion.span 
-                            className="text-sm font-medium"
-                            initial={{ y: 20, opacity: 0 }}
-                            whileInView={{ y: 0, opacity: 1 }}
-                            transition={{ delay: 0.2 }}
-                          >
+
+                        {/* Dark overlay */}
+                        <div className="absolute inset-0 bg-black/40" />
+
+                        {/* Animated glow (optional – keeps your premium feel) */}
+                        <motion.div
+                          className="absolute inset-0 bg-gradient-to-br from-amber-500/20 via-transparent to-purple-500/20"
+                          animate={{ opacity: [0.3, 0.6, 0.3] }}
+                          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                        />
+
+                        {/* Hover text */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6">
+                          <span className="text-sm font-medium text-white">
                             View Project →
-                          </motion.span>
+                          </span>
                         </div>
+
                       </div>
-                      <h3 className="text-xl font-display font-semibold mb-1">Project {item}</h3>
-                      <p className="text-muted-foreground text-sm">Brand Identity • Web Design</p>
+
+                      <h3 className="text-xl font-display font-semibold mb-1">{project.title}</h3>
+                      <p className="text-muted-foreground text-sm">{project.category}</p>
                     </motion.div>
+                    </a>
                   </ParallaxSection>
                 ))}
               </div>
@@ -283,7 +312,7 @@ const Home = () => {
                   className="glass-card p-12 md:p-20 text-center relative overflow-hidden"
                 >
                   {/* Animated gradient background */}
-                  <motion.div 
+                  <motion.div
                     className="absolute inset-0 bg-gradient-to-r from-amber-500/5 via-yellow-500/10 to-amber-500/5"
                     animate={{
                       backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
@@ -295,9 +324,9 @@ const Home = () => {
                     }}
                     style={{ backgroundSize: "200% 200%" }}
                   />
-                  
+
                   {/* Floating orbs */}
-                  <motion.div 
+                  <motion.div
                     className="absolute top-10 left-10 w-40 h-40 rounded-full bg-amber-500/5 blur-3xl"
                     animate={{
                       x: [0, 30, 0],
@@ -309,7 +338,7 @@ const Home = () => {
                       ease: "easeInOut"
                     }}
                   />
-                  <motion.div 
+                  <motion.div
                     className="absolute bottom-10 right-10 w-32 h-32 rounded-full bg-purple-500/5 blur-3xl"
                     animate={{
                       x: [0, -20, 0],
@@ -321,9 +350,9 @@ const Home = () => {
                       ease: "easeInOut"
                     }}
                   />
-                  
+
                   <div className="relative z-10">
-                    <motion.h2 
+                    <motion.h2
                       className="text-4xl md:text-6xl font-display font-bold mb-6"
                       initial={{ opacity: 0, y: 30 }}
                       whileInView={{ opacity: 1, y: 0 }}
@@ -332,7 +361,7 @@ const Home = () => {
                     >
                       Ready to <span className="golden-text">Start</span>?
                     </motion.h2>
-                    <motion.p 
+                    <motion.p
                       className="text-muted-foreground max-w-2xl mx-auto mb-8 text-lg"
                       initial={{ opacity: 0, y: 20 }}
                       whileInView={{ opacity: 1, y: 0 }}

@@ -17,13 +17,13 @@ const contactInfo = [
   {
     icon: Phone,
     title: "Phone",
-    value: "+1 (555) 123-4567",
-    href: "tel:+15551234567",
+    value: "+92 303 882 4080",
+    href: "tel:+923038824080",
   },
   {
     icon: MapPin,
     title: "Location",
-    value: "San Francisco, CA",
+    value: "Islamabad, Pakistan",
     href: "#",
   },
 ];
