@@ -7,51 +7,57 @@ import { ExternalLink } from "lucide-react";
 const projects = [
   {
     id: 1,
-    title: "Lumina Brand",
-    category: "Brand Identity",
+    title: "GlowGenesis",
+    category: "E-Commerce",
     description: "Complete brand overhaul for a luxury fashion house",
-    image: "",
+    image: "workPic/work1.png",
     gradient: "from-purple-900/40 to-pink-900/40",
+    url: "https://glowgenesis.net/", // Add your actual URL here
   },
   {
     id: 2,
     title: "TechFlow App",
     category: "Web Development",
     description: "SaaS platform for workflow automation",
-    image: "",
+    image: "workPic/work2.png",
     gradient: "from-blue-900/40 to-cyan-900/40",
+    url: "https://www.runanalytic.com/", // Add your actual URL here
   },
   {
     id: 3,
     title: "Artisan Co.",
     category: "E-Commerce",
     description: "Premium handcrafted goods marketplace",
-    image: "",
+    image: "workPic/work1.png",
     gradient: "from-amber-900/40 to-orange-900/40",
+    url: "https://example.com/artisan-co", // Add your actual URL here
   },
   {
     id: 4,
     title: "Horizon Finance",
     category: "UI/UX Design",
     description: "Next-gen banking experience redesign",
-    image: "",
+    image: "workPic/work1.png",
     gradient: "from-emerald-900/40 to-teal-900/40",
+    url: "https://example.com/horizon-finance", // Add your actual URL here
   },
   {
     id: 5,
     title: "Pulse Health",
     category: "Mobile App",
     description: "Wellness tracking and meditation app",
-    image: "",
+    image: "workPic/work1.png",
     gradient: "from-rose-900/40 to-red-900/40",
+    url: "https://example.com/pulse-health", // Add your actual URL here
   },
   {
     id: 6,
     title: "Nova Studio",
     category: "Brand Identity",
     description: "Creative agency complete rebrand",
-    image: "",
+    image: "workPic/work1.png",
     gradient: "from-indigo-900/40 to-violet-900/40",
+    url: "https://example.com/nova-studio", // Add your actual URL here
   },
 ];
 
@@ -103,27 +109,42 @@ const Work = () => {
                   viewport={{ once: true }}
                   className="group cursor-pointer"
                 >
-                  <div
-                    className={`relative overflow-hidden rounded-2xl aspect-[16/10] bg-gradient-to-br ${project.gradient} mb-4`}
+                  <a
+                    href={project.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block"
                   >
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-                    <div className="absolute inset-0 flex items-end p-8">
-                      <div className="transform translate-y-4 group-hover:translate-y-0 transition-transform">
-                        <span className="text-amber-400 text-sm font-medium mb-2 block">
-                          {project.category}
-                        </span>
-                        <h3 className="text-2xl font-display font-bold mb-2">
-                          {project.title}
-                        </h3>
-                        <p className="text-muted-foreground text-sm opacity-0 group-hover:opacity-100 transition-opacity">
-                          {project.description}
-                        </p>
+                    <div
+                      className={`relative overflow-hidden rounded-2xl aspect-[16/10] bg-gradient-to-br ${project.gradient} mb-4`}
+                    >
+                      {project.image && (
+                        <img
+                          src={`/${project.image}`}
+                          alt={project.title}
+                          className="absolute inset-0 w-full h-full object-cover"
+                        />
+                      )}
+                      {/* Darker overlay for better text readability */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/10" />
+                      <div className="absolute inset-0 flex items-end p-8">
+                        <div className="transform translate-y-4 group-hover:translate-y-0 transition-transform">
+                          <span className="text-amber-400 text-sm font-medium mb-2 block">
+                            {project.category}
+                          </span>
+                          <h3 className="text-2xl font-display font-bold mb-2">
+                            {project.title}
+                          </h3>
+                          <p className="text-muted-foreground text-sm opacity-0 group-hover:opacity-100 transition-opacity">
+                            {project.description}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all transform translate-x-4 group-hover:translate-x-0">
+                        <ExternalLink className="w-4 h-4" />
                       </div>
                     </div>
-                    <div className="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all transform translate-x-4 group-hover:translate-x-0">
-                      <ExternalLink className="w-4 h-4" />
-                    </div>
-                  </div>
+                  </a>
                 </motion.div>
               ))}
             </div>

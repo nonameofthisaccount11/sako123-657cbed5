@@ -71,7 +71,7 @@ export function Footer() {
     twitter: "#", github: "#", linkedin: "#", instagram: "#", facebook: "#", youtube: "#"
   });
   const [footer, setFooter] = useState<FooterSettings>({
-    copyright: "© 2024 SAKO Agency. All rights reserved.",
+    copyright: "© 2026 SAKO Agency. All rights reserved.",
     terms_url: "#",
     privacy_url: "#",
     cookies_url: "#"
@@ -110,7 +110,7 @@ export function Footer() {
               break;
             case "footer":
               setFooter({
-                copyright: value.copyright || "© 2024 SAKO Agency. All rights reserved.",
+                copyright: value.copyright || "© 2026 SAKO Agency. All rights reserved.",
                 terms_url: value.terms_url || "#",
                 privacy_url: value.privacy_url || "#",
                 cookies_url: value.cookies_url || "#"
