@@ -68,11 +68,18 @@ const defaultServices = [
     features: ["iOS Development", "Android Development", "React Native", "App Strategy"],
   },
   {
-    icon: TrendingUp,
-    title: "Growth Strategy",
+    icon: Sparkles,
+    title: "AI Chatbots/Agents",
     description:
-      "Data-driven strategies to accelerate your business growth. We help you identify opportunities and optimize performance.",
-    features: ["Analytics", "Conversion Optimization", "A/B Testing", "Performance Tracking"],
+      "We build intelligent AI chatbots and agents that can automate tasks, answer customer queries, and provide personalized experiences.",
+    features: ["Custom Chatbots", "AI Agents", "Automation", "Personalization"],
+  },
+  {
+    icon: Code,
+    title: "Web Scraping",
+    description:
+      "We extract data from websites and provide it in a structured format.",
+    features: ["Web Scraping", "Data Extraction", "Data Analysis", "Data Visualization"],
   },
 ];
 

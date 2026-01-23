@@ -66,10 +66,14 @@ const About = () => {
 
   // Fallback team if no members in database
   const displayTeam = teamMembers.length > 0 ? teamMembers : [
-    { id: "1", name: "Alex Chen", role: "Founder & CEO", image_url: "" },
-    { id: "2", name: "Sarah Miller", role: "Creative Director", image_url: "" },
-    { id: "3", name: "James Wilson", role: "Lead Developer", image_url: "" },
-    { id: "4", name: "Emma Davis", role: "UX Designer", image_url: "" },
+    { id: "1", name: "Atif Mumtaz", role: "Founder & CTO & AI Engineer & Web Scraper", image_url: "" },
+    { id: "2", name: "Ali Ahmed", role: "Founder & CEO", image_url: "" },
+    { id: "3", name: "Zhaeer Shahzaib", role: "Web Developer", image_url: "" },
+    { id: "4", name: "Alamghir Jahanzaib", role: "App Developer", image_url: "" },
+    { id: "5", name: "Waqas Khan", role: "Digital Marketer", image_url: "" },
+    { id: "6", name: "Faisal Shah", role: "App Developer", image_url: "" },
+    { id: "7", name: "Muhammad Arslan", role: "UI/UX Designer", image_url: "" },
+    { id: "8", name: "Muhammad Ali", role: "Wordpress Developer", image_url: "" },
   ];
 
   return (
@@ -144,20 +148,13 @@ const About = () => {
                 </h2>
                 <div className="space-y-4 text-muted-foreground">
                   <p>
-                    Founded in 2016, SAKO began with a simple mission: to create digital
-                    experiences that make a real difference. What started as a small team
-                    of passionate designers and developers has grown into a full-service
-                    creative agency.
+                    Founded in 2024, SAKO began with a clear vision: to use artificial intelligence to simplify work and help businesses operate smarter. What started as a small team of forward-thinking engineers and problem solvers has grown into a full-service AI agency focused on automation and intelligent solutions.
                   </p>
                   <p>
-                    We believe that great design is about more than aesthetics—it's about
-                    solving problems, telling stories, and creating meaningful connections
-                    between brands and their audiences.
+                    We believe AI is more than just technology — it’s a tool for eliminating repetitive tasks, optimizing workflows, and enabling teams to focus on what truly matters. Our approach is centered on building practical, reliable AI systems that solve real business problems and deliver measurable impact.
                   </p>
                   <p>
-                    Today, we work with clients ranging from ambitious startups to
-                    established enterprises, helping them navigate the digital landscape
-                    and achieve their goals.
+                    Today, we partner with ambitious startups and established enterprises alike, helping them automate processes, improve decision-making, and scale efficiently in an AI-driven world.
                   </p>
                 </div>
               </motion.div>
